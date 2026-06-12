@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recorrido del Estudiante · HUB DI UNLa</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN (igual que el resto del proyecto) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            teal:     '#0E7469',
+            tealdark: '#0a5a52',
+            teallight:'#e8f5f3',
+            hub:      '#111111',
+            gris:     '#404A4D',
+            cream:    '#f9f7f4',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- CSS propio: solo lo que Tailwind no puede manejar -->
+  <!-- Estados dinámicos generados por JS y animación de barra -->
+  <link rel="stylesheet" href="css/recorrido.css" />
+</head>
+
+<body class="bg-cream text-hub font-sans min-h-screen">
+
+  <!-- TOPBAR -->
+  <div class="bg-white border-b border-[#e0ddd8] px-8 py-2 text-xs text-[#888] tracking-widest uppercase">
+    UNLa · Departamento de Humanidades y Artes
+  </div>
+
+  <!-- NAV -->
+  <nav class="bg-hub px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2 text-xs font-bold text-white tracking-widest uppercase">
+      <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+      HUB DI UNLa · Recorrido del Estudiante
+    </div>
+    <a href="index.html" class="text-xs text-white/50 hover:text-white uppercase tracking-wide transition">
+      ← Volver al inicio
+    </a>
+  </nav>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="max-w-3xl mx-auto px-6 py-10 pb-20">
+
+    <!-- ══════════════════════════════════
+         PANTALLA 1 · BIENVENIDA
+    ══════════════════════════════════ -->
+    <div class="screen" id="screen-welcome">
+
+      <p class="text-teal text-xs font-bold tracking-[0.14em] uppercase mb-3">
+        HUB de Incubación de Diseño
+      </p>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight leading-tight mb-4">
+        Tu recorrido<br>comienza acá
+      </h1>
+      <p class="text-sm text-[#777] leading-relaxed max-w-lg mb-10">
+        Respondé el test de diagnóstico y el HUB te va a indicar en qué estadio está tu proyecto,
+        qué módulos tenés habilitados y qué ejercicios hacer para avanzar hacia la incubación.
+      </p>
+
+      <!-- Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+        <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 flex flex-col gap-1">
+          <span class="text-2xl font-extrabold text-teal leading-none">01</span>
+          <span class="text-xs font-semibold uppercase tracking-wide">Hacés el test</span>
+          <span class="text-xs text-[#777] leading-relaxed">10 preguntas sobre el estado de tu proyecto. Tarda 5 minutos.</span>
+        </div>
+        <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 flex flex-col gap-1">
+          <span class="text-2xl font-extrabold text-teal leading-none">02</span>
+          <span class="text-xs font-semibold uppercase tracking-wide">Recibís tu estadio</span>
+          <span class="text-xs text-[#777] leading-relaxed">El HUB te dice en qué etapa estás y qué módulos podés hacer.</span>
+        </div>
+        <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 flex flex-col gap-1">
+          <span class="text-2xl font-extrabold text-teal leading-none">03</span>
+          <span class="text-xs font-semibold uppercase tracking-wide">Avanzás</span>
+          <span class="text-xs text-[#777] leading-relaxed">Completás ejercicios, desbloqueás módulos y llegás a la incubadora.</span>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex flex-wrap gap-3">
+        <button onclick="iniciarTest()"
+          class="bg-hub text-white text-xs font-bold px-8 py-3 rounded-lg uppercase tracking-widest hover:bg-teal transition">
+          Hacer el test de diagnóstico →
+        </button>
+        <button onclick="verDemo()"
+          class="bg-transparent text-hub text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest border border-[#e0ddd8] hover:border-hub transition">
+          Ver demo del recorrido
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════
+         PANTALLA 2 · TEST
+    ══════════════════════════════════ -->
+    <div class="screen" id="screen-test">
+
+      <p class="text-teal text-xs font-bold tracking-[0.14em] uppercase mb-3">
+        Test de Diagnóstico · Módulo 1
+      </p>
+      <h2 class="text-2xl font-extrabold uppercase tracking-tight mb-2">
+        ¿En qué estadio está tu proyecto?
+      </h2>
+      <p class="text-sm text-[#777] leading-relaxed mb-8">
+        Respondé estas 3 preguntas para determinar tu punto de partida.
+        Tu progreso se guarda automáticamente en este dispositivo.
+      </p>
+
+      <!-- Pregunta 1 -->
+      <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 mb-4">
+        <p class="text-sm font-semibold mb-4">1 · ¿Cómo describirías el estado actual de tu idea?</p>
+        <div class="flex flex-col gap-2" id="q1">
+          <button class="opt-btn" data-q="1" data-val="1" onclick="selectOpt(this)">Tengo una idea vaga, todavía no la desarrollé</button>
+          <button class="opt-btn" data-q="1" data-val="2" onclick="selectOpt(this)">Identifiqué un problema y tengo una propuesta en desarrollo</button>
+          <button class="opt-btn" data-q="1" data-val="3" onclick="selectOpt(this)">Tengo una propuesta concreta con bocetos o prototipos</button>
+        </div>
+      </div>
+
+      <!-- Pregunta 2 -->
+      <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 mb-4">
+        <p class="text-sm font-semibold mb-4">2 · ¿Identificaste quién es el usuario o destinatario?</p>
+        <div class="flex flex-col gap-2" id="q2">
+          <button class="opt-btn" data-q="2" data-val="1" onclick="selectOpt(this)">No, todavía no lo definí</button>
+          <button class="opt-btn" data-q="2" data-val="2" onclick="selectOpt(this)">Tengo una idea general pero sin validar</button>
+          <button class="opt-btn" data-q="2" data-val="3" onclick="selectOpt(this)">Sí, lo tengo definido y tuve contacto con usuarios reales</button>
+        </div>
+      </div>
+
+      <!-- Pregunta 3 -->
+      <div class="bg-white border border-[#e0ddd8] rounded-xl p-5 mb-8">
+        <p class="text-sm font-semibold mb-4">3 · ¿Evaluaste la viabilidad de tu proyecto?</p>
+        <div class="flex flex-col gap-2" id="q3">
+          <button class="opt-btn" data-q="3" data-val="1" onclick="selectOpt(this)">No lo pensé todavía</button>
+          <button class="opt-btn" data-q="3" data-val="2" onclick="selectOpt(this)">Lo analicé informalmente pero tengo dudas</button>
+          <button class="opt-btn" data-q="3" data-val="3" onclick="selectOpt(this)">Sí, evalué recursos, tiempo y tecnología disponible</button>
+        </div>
+      </div>
+
+      <button id="btn-calcular" onclick="calcularEstadio()" disabled
+        class="bg-hub text-white text-xs font-bold px-8 py-3 rounded-lg uppercase tracking-widest hover:bg-teal transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-hub">
+        Ver mi estadio y recorrido →
+      </button>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════
+         PANTALLA 3 · DASHBOARD
+    ══════════════════════════════════ -->
+    <div class="screen" id="screen-dashboard">
+
+      <!-- Header -->
+      <div class="flex flex-wrap items-start justify-between gap-4 mb-8">
+        <div>
+          <p class="text-teal text-xs font-bold tracking-[0.12em] uppercase mb-1">Tu recorrido</p>
+          <h2 class="text-2xl font-extrabold uppercase tracking-tight" id="dash-title">–</h2>
+        </div>
+        <span class="estadio-badge" id="estadio-badge">–</span>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div class="bg-white border border-[#e0ddd8] rounded-xl px-6 py-5 mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-xs font-semibold text-gris uppercase tracking-widest">Progreso general</span>
+          <span class="text-xs font-bold text-teal" id="pct-label">0%</span>
+        </div>
+        <div class="h-1.5 bg-[#e0ddd8] rounded-full">
+          <div class="progress-bar-fill h-1.5 bg-teal rounded-full" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Lista módulos (generada por JS) -->
+      <p class="text-xs font-bold text-[#aaa] uppercase tracking-[0.12em] mb-4">Tus módulos</p>
+      <div class="flex flex-col gap-3 mb-8" id="modulos-list"></div>
+
+      <button onclick="resetApp()"
+        class="text-xs font-semibold text-[#777] uppercase tracking-widest border border-[#e0ddd8] rounded-lg px-5 py-2.5 hover:border-hub hover:text-hub transition">
+        Reiniciar diagnóstico
+      </button>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════
+         PANTALLA 4 · MÓDULO DETALLE
+    ══════════════════════════════════ -->
+    <div class="screen" id="screen-modulo">
+
+      <!-- Header -->
+      <div class="flex items-center gap-3 mb-8">
+        <button onclick="volverDashboard()"
+          class="text-xs font-semibold text-gris uppercase tracking-widest border border-[#e0ddd8] rounded-lg px-4 py-2 hover:border-hub hover:text-hub transition">
+          ← Volver
+        </button>
+        <div>
+          <p class="text-teal text-xs font-bold tracking-[0.12em] uppercase" id="mod-eyebrow">Módulo</p>
+          <h2 class="text-xl font-extrabold uppercase tracking-tight" id="mod-title">–</h2>
+        </div>
+      </div>
+
+      <!-- Ejercicios (generados por JS) -->
+      <div class="flex flex-col gap-3 mb-6" id="ejercicios-list"></div>
+
+      <button id="btn-completar" onclick="completarModulo()"
+        class="w-full bg-hub text-white text-xs font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-teal transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-hub">
+        Marcar módulo como completado ✓
+      </button>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════
+         PANTALLA 5 · FINAL
+    ══════════════════════════════════ -->
+    <div class="screen" id="screen-final">
+      <div class="bg-hub rounded-2xl px-10 py-14 text-center">
+        <div class="text-5xl mb-5">🎯</div>
+        <p class="text-teal text-xs font-bold tracking-[0.14em] uppercase mb-3">¡Recorrido completado!</p>
+        <h2 class="text-white text-2xl font-extrabold uppercase tracking-tight leading-tight mb-4">
+          Tu proyecto está listo<br>para incubarse
+        </h2>
+        <p class="text-white/60 text-sm leading-relaxed max-w-md mx-auto mb-8">
+          Completaste todos los módulos de tu recorrido. El equipo del HUB DI UNLa
+          está esperando tu consulta para iniciar el proceso de incubación formal.
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center">
+          <a href="mailto:incubadoradetifypppunla@gmail.com?subject=Solicitud%20de%20incubación%20-%20Recorrido%20completado"
+            class="bg-teal text-white text-xs font-bold px-7 py-3 rounded-lg uppercase tracking-widest hover:bg-tealdark transition">
+            Contactar al HUB →
+          </a>
+          <button onclick="volverDashboard(true)"
+            class="text-white text-xs font-bold px-7 py-3 rounded-lg uppercase tracking-widest border border-white/25 hover:border-white transition">
+            Ver mi recorrido
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /contenedor -->
+
+
+  <script>
+    // ══════════════════════════════════════════════════════
+    // DATOS
+    // ══════════════════════════════════════════════════════
+    const MODULOS = [
+      {
+        id: 1, nombre: "Punto de Partida",
+        desc: "Diagnóstico inicial e identificación del problema.",
+        ejercicios: [
+          { id: "1a", titulo: "Test de incubabilidad", desc: "Respondé las 10 preguntas del test de diagnóstico completo." },
+          { id: "1b", titulo: "Ficha de idea inicial", desc: "Completá la ficha con nombre, problema y usuario preliminar." },
+          { id: "1c", titulo: "Mapa de stakeholders", desc: "Identificá los actores involucrados en tu proyecto." },
+        ]
+      },
+      {
+        id: 2, nombre: "Elegir el Camino",
+        desc: "Definición del modelo de incubación más adecuado.",
+        ejercicios: [
+          { id: "2a", titulo: "Canvas del modelo de incubación", desc: "Completá el canvas para definir qué tipo de proyecto estás desarrollando." },
+          { id: "2b", titulo: "Benchmark de referentes", desc: "Investigá 3 proyectos similares al tuyo y analizá sus diferencias." },
+          { id: "2c", titulo: "Definición del alcance", desc: "Establecé qué incluye y qué no incluye tu proyecto en esta etapa." },
+        ]
+      },
+      {
+        id: 3, nombre: "Construir la Propuesta",
+        desc: "Formulario de postulación y construcción del pitch.",
+        ejercicios: [
+          { id: "3a", titulo: "Brief de diseño", desc: "Redactá el brief formal de tu proyecto con objetivos y restricciones." },
+          { id: "3b", titulo: "Boceto o prototipo inicial", desc: "Desarrollá al menos un boceto o representación visual de tu propuesta." },
+          { id: "3c", titulo: "Pitch de 2 minutos", desc: "Preparate para presentar tu idea en 2 minutos frente al equipo del HUB." },
+        ]
+      },
+      {
+        id: 4, nombre: "Gestionar el Proyecto",
+        desc: "Timeline, roles y presupuesto del proyecto.",
+        ejercicios: [
+          { id: "4a", titulo: "Cronograma de trabajo", desc: "Armá un timeline con hitos y fechas estimadas para tu proyecto." },
+          { id: "4b", titulo: "Definición de roles", desc: "Identificá qué roles necesita tu proyecto y quién los ocupa." },
+          { id: "4c", titulo: "Presupuesto estimado", desc: "Estimá los recursos económicos necesarios para el desarrollo." },
+        ]
+      },
+      {
+        id: 5, nombre: "Recursos y Conexiones",
+        desc: "Directorio de recursos y opciones de financiamiento.",
+        ejercicios: [
+          { id: "5a", titulo: "Mapa de recursos del LAD", desc: "Conocé las herramientas y equipamiento disponible en el Laboratorio." },
+          { id: "5b", titulo: "Opciones de financiamiento", desc: "Investigá convocatorias, becas y fondos aplicables a tu proyecto." },
+          { id: "5c", titulo: "Red de contactos del HUB", desc: "Identificá referentes, empresas y organizaciones del ecosistema." },
+        ]
+      }
+    ];
+
+    const ESTADIOS = {
+      semilla:    { label: "🌱 Semilla",           clase: "semilla",    titulo: "Proyecto en etapa inicial", modulosActivos: [1, 2],       modulosBloqueados: [3, 4, 5] },
+      desarrollo: { label: "🔧 En desarrollo",     clase: "desarrollo", titulo: "Proyecto en desarrollo",   modulosActivos: [1, 2, 3],    modulosBloqueados: [4, 5]    },
+      listo:      { label: "🚀 Listo para incubar",clase: "listo",      titulo: "Listo para incubar",       modulosActivos: [1, 2, 3, 4, 5], modulosBloqueados: []     }
+    };
+
+    // ══════════════════════════════════════════════════════
+    // ESTADO — persiste en localStorage
+    // ══════════════════════════════════════════════════════
+    const STORAGE_KEY = "hub_recorrido_v1";
+    let state = { estadio: null, modulosCompletados: [], ejerciciosCompletados: [], respuestas: {} };
+    let respuestasTest = {};
+
+    function cargarEstado() {
+      try { const r = localStorage.getItem(STORAGE_KEY); if (r) state = JSON.parse(r); } catch(e) {}
+    }
+    function guardarEstado() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // ══════════════════════════════════════════════════════
+    // NAVEGACIÓN
+    // ══════════════════════════════════════════════════════
+    function mostrar(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // ══════════════════════════════════════════════════════
+    // P1: BIENVENIDA
+    // ══════════════════════════════════════════════════════
+    function iniciarTest() { mostrar('screen-test'); }
+
+    function verDemo() {
+      state.estadio = "desarrollo";
+      guardarEstado();
+      renderDashboard();
+      mostrar('screen-dashboard');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // P2: TEST
+    // ══════════════════════════════════════════════════════
+    function selectOpt(btn) {
+      const q = btn.dataset.q;
+      document.querySelectorAll(`.opt-btn[data-q="${q}"]`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      respuestasTest[q] = parseInt(btn.dataset.val);
+      document.getElementById('btn-calcular').disabled = Object.keys(respuestasTest).length < 3;
+    }
+
+    function calcularEstadio() {
+      const total = Object.values(respuestasTest).reduce((a, b) => a + b, 0);
+      state.estadio = total <= 4 ? "semilla" : total <= 7 ? "desarrollo" : "listo";
+      guardarEstado();
+      renderDashboard();
+      mostrar('screen-dashboard');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // P3: DASHBOARD
+    // ══════════════════════════════════════════════════════
+    function renderDashboard(silencioso = false) {
+      const e = ESTADIOS[state.estadio];
+
+      document.getElementById('dash-title').textContent = e.titulo;
+      const badge = document.getElementById('estadio-badge');
+      badge.textContent = e.label;
+      badge.className = `estadio-badge ${e.clase}`;
+
+      const total  = e.modulosActivos.length;
+      const hechos = state.modulosCompletados.filter(id => e.modulosActivos.includes(id)).length;
+      const pct    = total > 0 ? Math.round((hechos / total) * 100) : 0;
+      document.getElementById('pct-label').textContent   = `${pct}%`;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+
+      const lista = document.getElementById('modulos-list');
+      lista.innerHTML = '';
+
+      MODULOS.forEach(m => {
+        const completado = state.modulosCompletados.includes(m.id);
+        const bloqueado  = e.modulosBloqueados.includes(m.id);
+        const clase      = completado ? 'completado' : bloqueado ? 'bloqueado' : 'activo';
+        const status     = completado ? 'Completado ✓' : bloqueado ? 'Bloqueado' : 'Disponible';
+
+        const row = document.createElement('div');
+        row.className = `modulo-row ${clase}`;
+        if (!bloqueado) row.onclick = () => abrirModulo(m.id);
+
+        row.innerHTML = `
+          <div class="modulo-num-box">M${m.id}</div>
+          <div class="flex-1">
+            <p class="modulo-name">M${m.id} · ${m.nombre}</p>
+            <p class="modulo-desc">${m.desc}</p>
+          </div>
+          <span class="modulo-status">${status}</span>
+        `;
+        lista.appendChild(row);
+      });
+
+      if (!silencioso && total > 0 && hechos === total) {
+        setTimeout(() => mostrar('screen-final'), 400);
+      }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // P4: MÓDULO DETALLE
+    // ══════════════════════════════════════════════════════
+    let moduloActual = null;
+
+    function abrirModulo(id) {
+      moduloActual = id;
+      const m = MODULOS.find(x => x.id === id);
+      const e = ESTADIOS[state.estadio];
+      const bloqueado = e.modulosBloqueados.includes(id);
+
+      document.getElementById('mod-eyebrow').textContent = `Módulo ${id}`;
+      document.getElementById('mod-title').textContent   = m.nombre;
+
+      const lista = document.getElementById('ejercicios-list');
+      lista.innerHTML = '';
+
+      m.ejercicios.forEach(ej => {
+        const checked = state.ejerciciosCompletados.includes(ej.id);
+        const row = document.createElement('div');
+        row.className = 'ejercicio-row';
+        row.innerHTML = `
+          <div class="ejercicio-check ${checked ? 'checked' : ''}" id="chk-${ej.id}"
+               onclick="${bloqueado ? '' : `toggleEjercicio('${ej.id}')`}"></div>
+          <div class="flex-1">
+            <p class="ejercicio-title">${ej.titulo}</p>
+            <p class="ejercicio-desc">${ej.desc}</p>
+          </div>
+        `;
+        lista.appendChild(row);
+      });
+
+      const btn = document.getElementById('btn-completar');
+      if (bloqueado) {
+        btn.disabled = true;
+        btn.textContent = 'Módulo bloqueado';
+      } else if (state.modulosCompletados.includes(id)) {
+        btn.disabled = false;
+        btn.textContent = '✓ Módulo completado — ver ejercicios';
+        btn.onclick = () => volverDashboard();
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Marcar módulo como completado ✓';
+        btn.onclick = () => completarModulo();
+      }
+
+      mostrar('screen-modulo');
+    }
+
+    function toggleEjercicio(ejId) {
+      const idx = state.ejerciciosCompletados.indexOf(ejId);
+      if (idx === -1) state.ejerciciosCompletados.push(ejId);
+      else            state.ejerciciosCompletados.splice(idx, 1);
+      guardarEstado();
+      document.getElementById(`chk-${ejId}`).classList.toggle('checked', state.ejerciciosCompletados.includes(ejId));
+    }
+
+    function completarModulo() {
+      if (!state.modulosCompletados.includes(moduloActual)) {
+        state.modulosCompletados.push(moduloActual);
+        guardarEstado();
+      }
+      volverDashboard();
+    }
+
+    function volverDashboard(desdeFinal = false) {
+      renderDashboard(desdeFinal);
+      mostrar('screen-dashboard');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // RESET
+    // ══════════════════════════════════════════════════════
+    function resetApp() {
+      if (confirm('¿Reiniciar el diagnóstico? Se borrará tu progreso guardado.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        state = { estadio: null, modulosCompletados: [], ejerciciosCompletados: [], respuestas: {} };
+        respuestasTest = {};
+        mostrar('screen-welcome');
+      }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════════════
+    cargarEstado();
+    if (state.estadio) { renderDashboard(); mostrar('screen-dashboard'); }
+    else               { mostrar('screen-welcome'); }
+  </script>
+
+</body>
+</html>
