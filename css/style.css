@@ -749,3 +749,51 @@ h6 {
     grid-template-columns: 1fr;
   }
 }
+
+
+.acc-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.acc-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+}
+.acc-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.acc-icon {
+  transition: transform 0.25s ease;
+}
+.acc-item.open .acc-icon {
+  transform: rotate(180deg);
+}
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.acc-item.open .acc-body {
+  max-height: 600px;
+}
+.acc-inner {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.acc-inner img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  max-height: 200px;
+}
