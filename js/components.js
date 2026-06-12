@@ -67,8 +67,10 @@ document.addEventListener("submit", (event) => {
 });
 
 function toggle(btn) {
-  const item = btn.closest('.acc-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.acc-item.open').forEach(el => el.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
+  const item = btn.closest(".acc-item");
+  const isOpen = item.classList.contains("open");
+  document
+    .querySelectorAll(".acc-item.open")
+    .forEach((el) => el.classList.remove("open"));
+  if (!isOpen) item.classList.add("open");
 }
